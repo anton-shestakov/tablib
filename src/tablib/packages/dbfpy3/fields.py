@@ -208,7 +208,7 @@ class DbfCharacterFieldDef(DbfFieldDef):
         Return value is a ``value`` argument with stripped right spaces.
 
         """
-        return value.rstrip(b' ').decode('utf-8')
+        return value.rstrip(b' ')
 
     def encodeValue(self, value):
         """Return raw data string encoded from a ``value``."""
@@ -302,11 +302,11 @@ class DbfLogicalFieldDef(DbfFieldDef):
     def decodeValue(self, value):
         """Return True, False or -1 decoded from ``value``."""
         # Note: value always is 1-char string
-        if value == "?":
+        if value == b"?":
             return -1
-        if value in "NnFf ":
+        if value in b"NnFf ":
             return False
-        if value in "YyTt":
+        if value in b"YyTt":
             return True
         raise ValueError("[%s] Invalid logical value %r" % (self.name, value))
 
@@ -319,10 +319,10 @@ class DbfLogicalFieldDef(DbfFieldDef):
 
         """
         if value is True:
-            return "T"
+            return b"T"
         if value == -1:
-            return "?"
-        return "F"
+            return b"?"
+        return b"F"
 
 
 class DbfMemoFieldDef(DbfFieldDef):
